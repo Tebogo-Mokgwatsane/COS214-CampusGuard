@@ -6,9 +6,13 @@
 #include "Command.h"
 #include "CampusMediator.h"          // CampusMediator
 #include "Colleague.h"
-#include "AccessControl.h"     // AccessControlService
+#include "AccessControlService.h"     // AccessControlService
 #include "Incident.h"          // Incident + concrete states
 #include <iostream>
+#include "DispatchedState.h"   
+#include "OnGoingState.h"      
+#include "ResolvedState.h"     
+#include "CancelledState.h"    
 
 using namespace std;
 

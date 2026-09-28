@@ -10,7 +10,7 @@
 
 #include <string>
 
-class AccessControl;
+class AccessControlService;
 class CampusMediator;
 class Incident;
 
@@ -21,7 +21,7 @@ class Incident;
 class EmergencyFacade
 {
     private:
-        AccessControl* access;
+        AccessControlService* access;
         CampusMediator* mediator;
         Incident* incident;
     public:
@@ -29,7 +29,7 @@ class EmergencyFacade
         /**
          * @brief Construct over existing subsystems
          */
-        EmergencyFacade(AccessControl* access, CampusMediator* mediator, Incident* incident);
+        EmergencyFacade(AccessControlService* access, CampusMediator* mediator, Incident* incident);
         
         /**
          * @brief Lockdown an area dispatch security and facilities, then lock it.
@@ -39,7 +39,7 @@ class EmergencyFacade
         /**
          *  @brief Full emergency response: lockdown + medical dispatch.
          */
-        void fullResponse(const std::string& area);
+        void fullResponse(Incident& incident);
 
 };
 

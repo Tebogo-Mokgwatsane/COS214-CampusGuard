@@ -9,9 +9,11 @@
 #include <iostream>
 
 void CampusMediator::registerColleague(Colleague* c) {
-    if (std::find(colleagues.begin(), colleagues.end(), c) == colleagues.end())
+     if (c == nullptr) return;                                  // extra safety
+    if (std::find(colleagues.begin(), colleagues.end(), c) == colleagues.end()) {
         colleagues.push_back(c);
         c->setMediator(this);
+    }
 }
 
 void CampusMediator::notify(Colleague* sender, Event e,

@@ -1,58 +1,69 @@
-CXX      = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra -g
-LDFLAGS  =
+# ============================================================
+# CampusGuard Makefile
+# COS214 Practical 5 - Emergency Response Coordination
+# ============================================================
+# Builds the complete CampusGuard application using C++11.
+# Usage: make          -> builds ./campusguard
+#        make clean    -> removes build artefacts
+#        make run      -> builds and runs
+# ============================================================
 
-# Two entry points, so they are not linked together.
-MAINS       = main.cpp main_interactive.cpp
+CXX      := g++
+CXXFLAGS := -std=c++11 -Wall -Wextra -Wpedantic -g -O0 \
+            -fno-omit-frame-pointer -fstack-protector-strong
+LDFLAGS  :=
+TARGET   := campusguard
+BUILD    := build
 
-# Everything else (patterns, units, facade, ...) is picked up automatically,
-# so new files such as EmergencyFacade.cpp need no Makefile change.
-LIB_SOURCES = $(filter-out $(MAINS),$(wildcard *.cpp))
-LIB_OBJECTS = $(LIB_SOURCES:.cpp=.o)
+# All source files (headers are discovered automatically by dependency tracking)
+SRCS := $(wildcard *.cpp)
 
-INTERACTIVE = campusguard
-FF          = campusguard_ff
+OBJS := $(patsubst %.cpp,$(BUILD)/%.o,$(SRCS))
+DEPS := $(OBJS:.o=.d)
 
-DEPS = $(LIB_OBJECTS:.o=.d) main.d main_interactive.d
+# ============================================================
+# Default target
+# ============================================================
+.PHONY: all
+all: $(TARGET)
 
-.PHONY: all compile interactive ff run run-ff valgrind clean rebuild
+# ============================================================
+# Link
+# ============================================================
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+	@echo "=================================================="
+	@echo " Build complete: ./$(TARGET)"
+	@echo "=================================================="
 
-all: $(INTERACTIVE) $(FF)
+# ============================================================
+# Compile + auto-generate header dependencies
+# ============================================================
+$(BUILD)/%.o: %.cpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
-compile: all
+$(BUILD):
+	@mkdir -p $(BUILD)
 
-interactive: $(INTERACTIVE)
-ff: $(FF)
+# ============================================================
+# Convenience targets
+# ============================================================
+.PHONY: run
+run: all
+	./$(TARGET)
 
-$(INTERACTIVE): main_interactive.o $(LIB_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-	@echo "Built $@ successfully."
+.PHONY: valgrind
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all \
+	         --track-origins=yes --error-exitcode=1 \
+	         ./$(TARGET)
 
-$(FF): main.o $(LIB_OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-	@echo "Built $@ successfully."
-
-# Each .cpp produces a .o in the same directory
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Run the interactive program
-run: $(INTERACTIVE)
-	./$(INTERACTIVE)
-
-# Run the automated (non-interactive) test program
-run-ff: $(FF)
-	./$(FF)
-
-# Memory-leak check (automated program, since it needs no input)
-valgrind: $(FF)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(FF)
-
-# Remove build artefacts
+.PHONY: clean
 clean:
-	rm -f *.o *.d $(INTERACTIVE) $(FF)
-	clear
+	rm -rf $(BUILD) $(TARGET)
 	@echo "Cleaned."
 
-# Rebuild from scratch
-rebuild: clean all
+# ============================================================
+# Include auto-generated dependency files
+# ============================================================
+-include $(DEPS)

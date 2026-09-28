@@ -65,6 +65,10 @@ string Incident::getStateName() {
     return state->name();
 }
 
+bool Incident::advance() {
+    return state ? state->handle(*this) : false;
+}
+
 Incident::~Incident(){
     delete state;
 }

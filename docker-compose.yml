@@ -1,0 +1,14 @@
+# ============================================================
+# CampusGuard — docker-compose.yml
+# Usage: docker compose up --build
+# ============================================================
+
+services:
+  campusguard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: campusguard:latest
+    container_name: campusguard
+    stdin_open: true
+    tty: true

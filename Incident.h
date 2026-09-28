@@ -71,7 +71,7 @@ class Incident : public IncidentSubject{
          * @brief Advance the incident to the next state
          * @return True if the incident was advanced, false otherwise
          */  
-        bool advance() { return state ? state->handle(*this) : false; }
+        bool advance() ;
 
         ~Incident();
 };

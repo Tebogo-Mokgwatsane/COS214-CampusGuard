@@ -5,6 +5,7 @@
 #include "DispatchedState.h"
 #include "Incident.h"
 #include "OnGoingState.h"
+#include "ResolvedState.h" 
 #include <iostream>
 
 bool DispatchedState::handle(Incident& incident) {
