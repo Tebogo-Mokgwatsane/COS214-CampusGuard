@@ -16,13 +16,19 @@ class Incident;
  * 
  */
 class FacilitiesUnit : public IncidentObserver, public Colleague {
-        public:
-    /**
-     * @copydoc IncidentObserver::onIncidentChange
-     */
-    void onIncidentChanged(Incident& incident) override;
+ResponseMediator* mediator = nullptr;
 
-    void respond(const std::string& area);
+    public:
+        FacilitiesUnit() = default;
+
+        void setMediator(ResponseMediator* m) override { mediator = m; }
+        ResponseMediator* getMediator() const override { return mediator; }
+        /**
+         * @copydoc IncidentObserver::onIncidentChange
+         */
+        void onIncidentChanged(Incident& incident) override;
+
+        void respond(const std::string& area);
 };
 
 

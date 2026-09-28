@@ -15,8 +15,13 @@
  * @copydoc IncidentObserver::onIncidentChange
  */
 void SecurityUnit::onIncidentChanged(Incident& incident){
-    cout << "[SecurityUnit] notified of incident " <<incident.getId()
-    << " state=" << incident.getStateName() <<" location=" << incident.getLocation()<<endl; 
+    std::cout << "[SecurityUnit] notified of incident " <<incident.getId()
+    << " state=" << incident.getStateName() <<" location=" << incident.getLocation()<<std::endl; 
+
+    if (mediator != nullptr) {
+        mediator->notify(this, Event::SecurityNeeded,        incident.getLocation());
+        mediator->notify(this, Event::AccessLockRequested,   incident.getLocation());
+    }
 
 }
 

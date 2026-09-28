@@ -16,6 +16,12 @@ EmergencyFacade::EmergencyFacade(AccessControl* access, CampusMediator* mediator
     : access(access), mediator(mediator), incident(incident){}
 
 void EmergencyFacade::lockdown(const std::string& area){
+    cout << "\n[EmergencyFacade] lockdown(\"" << area << "\")\n";
+
+     if (incident->getStateName() == "Unknown") {
+        incident->setState(new DispatchedState());
+    }
+
     mediator->dispatch("security", *incident);
     mediator->dispatch("facilities", *incident);
     
@@ -26,6 +32,8 @@ void EmergencyFacade::lockdown(const std::string& area){
 
 
 void EmergencyFacade::fullResponse(const std::string& area){
+    cout << "\n[EmergencyFacade] fullResponse(\"" << area << "\")\n";
+
     lockdown(area);
     mediator->dispatch("medical", *incident);
 

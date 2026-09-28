@@ -16,6 +16,10 @@
 void FacilitiesUnit::onIncidentChanged(Incident& incident) {
     std::cout << "[FacilitiesUnit] notified of incident " << incident.getId()
               << " state=" << incident.getStateName() << "\n";
+
+    if (mediator != nullptr && incident.getStateName() == "OnGoing") {
+        mediator->notify(this, Event::FacilitiesNeeded, incident.getLocation());
+    }
 }
 
 void FacilitiesUnit::respond(const std::string& area) {

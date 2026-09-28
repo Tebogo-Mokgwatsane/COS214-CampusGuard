@@ -10,8 +10,6 @@
 #include <vector>
 #include <string>
 
-using namespace std;
-
 //forward declaration of the IncidentState and Incident classes
 
 

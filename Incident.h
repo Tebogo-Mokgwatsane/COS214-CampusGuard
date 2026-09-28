@@ -10,6 +10,8 @@
 #include <string>
 #include <memory>
 
+class IncidentState;
+class IncidentObserver;
 /** 
  * @brief Concrete Subject of the Observer pattern; also the Context of the State Pattern
  * Represents a reported incident. Holds the current incident state and notifies attached observers whenever the state changes
