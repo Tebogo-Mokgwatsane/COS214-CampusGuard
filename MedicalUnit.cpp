@@ -2,7 +2,7 @@
 //LISAKHANYA TATANE (25514424)
 //AMIRA AJANAKU (25111699)
 
-//SecurityUnit.cpp
+//MedicalUnit.cpp
 
 #include "MedicalUnit.h"
 

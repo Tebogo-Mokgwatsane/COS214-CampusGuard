@@ -49,10 +49,13 @@ void Incident::notify(){
  */
 
  void Incident::setState(IncidentState* s) {
-    if (s == nullptr) {
+    if (s == nullptr || s == state) {
         return;
     }
+
+    IncidentState* old = state;
     state = s;
+    delete old;
     notify();
     
  }
@@ -63,6 +66,7 @@ void Incident::notify(){
  */
 
 string Incident::getStateName() {
+    if (state ==nullptr) return "Unknown";
     return state->name();
 }
 
@@ -70,3 +74,14 @@ Incident::~Incident(){
     delete state;
 }
 
+int Incident::getId() const {
+    return id;
+}
+
+string Incident::getLocation() const {
+    return location;
+}
+
+bool Incident::advance() {
+    return state != nullptr && state->handle(*this);
+}

@@ -57,6 +57,12 @@ class Incident : public IncidentSubject{
 
         ~Incident();
 
+        int getId() const;
+
+        string getLocation() const;
+
+        bool advance();
+
 };
 
 

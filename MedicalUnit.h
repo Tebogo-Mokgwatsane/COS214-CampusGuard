@@ -14,7 +14,7 @@
 class MedicalUnit : public IncidentObserver {
     public:
     /**
-     * @copydoc IncidentObserver::onIncidentChanged
+     * @copydoc IncidentObserver::onIncidentChange
      */
     void onIncidentChange() override;   
 };
