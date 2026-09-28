@@ -8,6 +8,7 @@
 #include "IncidentSubject.h"
 #include <vector>
 #include <string>
+#include <memory>
 
 /** 
  * @brief Concrete Subject of the Observer pattern; also the Context of the State Pattern
@@ -15,7 +16,7 @@
  */
 class Incident : public IncidentSubject{
     private:
-        IncidentState* state;
+        std::unique_ptr<IncidentState> state;
         vector<IncidentObserver*> observers;
         int id;
         string location;
@@ -47,8 +48,8 @@ class Incident : public IncidentSubject{
          * @brief Transitions the incident to a new state and notify observers.
          * @param s Pointer to the new state
          */        
+        void setState(std::unique_ptr<IncidentState> s);
         void setState(IncidentState* s);
-
         /**
          * @brief Get the incident's current state
          * @return The current state's name

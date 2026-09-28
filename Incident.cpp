@@ -38,7 +38,7 @@ void Incident::detach(IncidentObserver* obs) {
 void Incident::notify(){
     for (IncidentObserver* obs : observers)
     {
-        obs->onIncidentChange();        
+        obs->onIncidentChanged(*this);        
     }
     
 }
@@ -47,16 +47,17 @@ void Incident::notify(){
  * @brief Transitions the incident state to a new state and notififes the observers
  * @param s Pointer to the new state
  */
-
- void Incident::setState(IncidentState* s) {
-    if (s == nullptr || s == state) {
+void Incident::setState(std::unique_ptr<IncidentState> s) {
+    if(!s){
         return;
     }
 
-    IncidentState* old = state;
-    state = s;
-    delete old;
+    std::unique_ptr<IncidentState> old = std::move(state);
+    state = std::move(s);
     notify();
+}
+void Incident::setState(IncidentState* s) {
+    setState(std::unique_ptr<IncidentState>(s));
     
  }
 
@@ -71,7 +72,6 @@ string Incident::getStateName() {
 }
 
 Incident::~Incident(){
-    delete state;
 }
 
 int Incident::getId() const {

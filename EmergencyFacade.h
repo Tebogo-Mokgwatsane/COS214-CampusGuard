@@ -16,7 +16,7 @@
 
 
 /**
- * @brief Facae over acces control, the response mediator and the incident.
+ * @brief Facade over access control, the response mediator and the incident.
  */
 
 class EmergencyFacade
