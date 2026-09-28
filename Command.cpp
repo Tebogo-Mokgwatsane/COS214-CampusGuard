@@ -4,7 +4,8 @@
  */
 
 #include "Command.h"
-#include "Mediator.h"          // CampusMediator
+#include "CampusMediator.h"          // CampusMediator
+#include "Colleague.h"
 #include "AccessControl.h"     // AccessControlService
 #include "Incident.h"          // Incident + concrete states
 #include <iostream>
@@ -16,7 +17,7 @@ DispatchUnitCommand::DispatchUnitCommand(CampusMediator* m, const string& type, 
 
 void DispatchUnitCommand::execute() {
     cout << "[Command] DispatchUnitCommand executing -> " << unitType << "\n";
-    mediator->dispatch(*incident, unitType);
+    mediator->dispatch(unitType, *incident);
 }
 
 void DispatchUnitCommand::undo() {
@@ -55,8 +56,8 @@ EvacuateCommand::EvacuateCommand(CampusMediator* m, const string& ar, Incident* 
 void EvacuateCommand::execute() {
     cout << "[Command] EvacuateCommand executing -> " << area << "\n";
     prevStateName = incident->getStateName();
-    mediator->dispatch(*incident, "Security");
-    mediator->dispatch(*incident, "Facilities");
+    mediator->dispatch("security", *incident); 
+    mediator->dispatch("facilities", *incident);
 }
 
 void EvacuateCommand::undo() {

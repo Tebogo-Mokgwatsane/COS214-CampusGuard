@@ -34,9 +34,9 @@ class IncidentObserver {
         virtual ~IncidentObserver() = default;
 
         /**
-         * @brief Called y an IncidentSubject when the incident it is attached to changes state
+         * @brief Called by an IncidentSubject when the incident it is attached to changes state
          */
-        virtual void onIncidentChange() = 0;
+        virtual void onIncidentChanged(Incident& incident) = 0;
 };
 
 

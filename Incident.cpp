@@ -38,7 +38,7 @@ void Incident::detach(IncidentObserver* obs) {
 void Incident::notify(){
     for (IncidentObserver* obs : observers)
     {
-        obs->onIncidentChange();        
+        obs->onIncidentChanged(*this);        
     }
     
 }
@@ -49,9 +49,8 @@ void Incident::notify(){
  */
 
  void Incident::setState(IncidentState* s) {
-    if (s == nullptr) {
-        return;
-    }
+    if (s == nullptr) return;
+    delete state;
     state = s;
     notify();
     

@@ -55,8 +55,25 @@ class Incident : public IncidentSubject{
          */        
         string getStateName();
 
-        ~Incident();
+        /**
+         * @brief Get the incident's current ID
+         * @return The current ID
+         */  
+        int getId() const { return id; }
 
+        /**
+         * @brief Get the incident's current location
+         * @return The current location
+         */  
+        string getLocation() const { return location; }
+
+        /**
+         * @brief Advance the incident to the next state
+         * @return True if the incident was advanced, false otherwise
+         */  
+        bool advance() { return state ? state->handle(*this) : false; }
+
+        ~Incident();
 };
 
 

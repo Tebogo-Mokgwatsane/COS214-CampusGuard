@@ -12,7 +12,9 @@
 #define ACCESSCONTROL_H
 
 #include <string>
-#include "Mediator.h"   // Colleague base class
+#include "CampusMediator.h"
+#include "Colleague.h"
+#include "ResponseMediator.h"
 
 using namespace std;
 

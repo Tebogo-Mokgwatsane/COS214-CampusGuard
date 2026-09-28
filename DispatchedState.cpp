@@ -10,7 +10,8 @@
 bool DispatchedState::handle(Incident& incident) {
     std::cout << "[State] Incident " << incident.getId()
               << " moving Dispatched -> OnGoing\n";
-    incident.setState(std::unique_ptr<IncidentState>(new OnGoingState()));
+    //incident.setState(std::unique_ptr<IncidentState>(new OnGoingState()));
+    incident.setState(new ResolvedState());
     return true;
 }
 
