@@ -8,12 +8,11 @@
 #define EMERGENCYFACADE_H
 
 
-#include "AccessControlService.h"
-#include "CampusMediator.h"
-#include "Incident.h"
 #include <string>
 
-
+class AccessControl;
+class CampusMediator;
+class Incident;
 
 /**
  * @brief Facade over access control, the response mediator and the incident.
@@ -22,7 +21,7 @@
 class EmergencyFacade
 {
     private:
-        AccessControlService* access;
+        AccessControl* access;
         CampusMediator* mediator;
         Incident* incident;
     public:
@@ -30,14 +29,17 @@ class EmergencyFacade
         /**
          * @brief Construct over existing subsystems
          */
-        EmergencyFacade(AccessControlService* access, CampusMediator* mediator, Incident* incident);
+        EmergencyFacade(AccessControl* access, CampusMediator* mediator, Incident* incident);
         
         /**
          * @brief Lockdown an area dispatch security and facilities, then lock it.
          * 
          */
-        void lockdown(const string& area);
-        void fullResponse(const string& area);
+        void lockdown(const std::string& area);
+        /**
+         *  @brief Full emergency response: lockdown + medical dispatch.
+         */
+        void fullResponse(const std::string& area);
 
 };
 

@@ -5,10 +5,19 @@
 //FacilitiesUnit.cpp
 
 #include "FacilitiesUnit.h"
+#include "Incident.h"
+#include "ResponseMediator.h"
+#include <iostream>
+
 
 /**
  * @copydoc IncidentObserver::onIncidentChange
  */
-void FacilitiesUnit::onIncidentChange(){
-    cout << "[FacilitiesUnit] notified of incident change." <<endl;
+void FacilitiesUnit::onIncidentChanged(Incident& incident) {
+    std::cout << "[FacilitiesUnit] notified of incident " << incident.getId()
+              << " state=" << incident.getStateName() << "\n";
+}
+
+void FacilitiesUnit::respond(const std::string& area) {
+    std::cout << "[FacilitiesUnit] responding on site at " << area << "\n";
 }

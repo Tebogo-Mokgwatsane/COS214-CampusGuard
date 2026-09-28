@@ -6,17 +6,21 @@
 #define SECURITYUNIT_H
 
 #include "IncidentObserver.h"
+#include "Colleague.h"
 
 /**
  * @brief Concrete Observer of the Observer Pattern.
  * Reacts to the incident state changes that are relevent to campus security 
  */
-class SecurityUnit : public IncidentObserver {
+class SecurityUnit : public IncidentObserver, Colleague {
+
     public:
     /**
      * @copydoc IncidentObserver::onIncidentChange
      */
-    void onIncidentChange() override;
+    void onIncidentChanged(Incident& incident) override;
+
+    void respond(const std::string& area);
 };
 
 #endif

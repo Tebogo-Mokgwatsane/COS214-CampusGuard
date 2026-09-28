@@ -14,7 +14,7 @@ using namespace std;
 
 //forward declaration of the IncidentState and Incident classes
 
-class IncidentState;
+
 class Incident;
 
 /**
